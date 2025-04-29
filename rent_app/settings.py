@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'your-secret-key-goes-here'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False  # Set to False for production, True for development
+DEBUG = True  # Set to False for production, True for development
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '102.215.76.98']
 
@@ -27,6 +27,15 @@ INSTALLED_APPS = [
 
     # Local app
     'rent',
+    'apartment',
+    'bills',
+    'tenant',
+    'landlord',
+    'messaging',
+    'payments',
+    'verified',
+    'accounts',
+    
 ]
 
 MIDDLEWARE = [
@@ -45,7 +54,7 @@ ROOT_URLCONF = 'rent_app.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates'],  # Global templates (if any)
+        'DIRS': [BASE_DIR / 'rent' / 'templates'],  # Global templates (if any)
         'APP_DIRS': True,  # This ensures app-specific templates are also discovered
         'OPTIONS': {
             'context_processors': [
@@ -84,6 +93,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Internationalization
 LANGUAGE_CODE = 'en-us'

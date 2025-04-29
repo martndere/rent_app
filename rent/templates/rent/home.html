@@ -1,88 +1,27 @@
-{% extends 'rent/base.html' %}
-{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rent Manager</title>
+</head>
+<body>
+    <h1>Welcome to Rent Manager</h1>
+    <p>Total Apartments: {{ apartment_count }}</p>
+    <p>Total Tenants: {{ tenant_count }}</p>
+    <p>Available Apartments: {{ available_apartments }}</p>
 
-{% block content %}
-<div class="container mt-5">
+    <h2>Recent Payments</h2>
+    <ul>
+        {% for payment in recent_payments %}
+            <li>{{ payment.tenant.user.username }} paid {{ payment.amount }} on {{ payment.date_paid }}</li>
+        {% endfor %}
+    </ul>
 
-    <!-- Dashboard Header -->
-    <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold">🏠 Rent Management Dashboard</h1>
-        <p class="text-muted">Manage apartments, tenants, and rent payments from one place.</p>
-    </div>
-
-    <!-- Summary Cards -->
-    <div class="row mb-4">
-        <div class="col-md-4 mb-3">
-            <div class="card border-0 shadow-sm text-white bg-primary">
-                <div class="card-body">
-                    <h5 class="card-title">Total Tenants</h5>
-                    <p class="display-6">{{ total_tenants }}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card border-0 shadow-sm text-white bg-success">
-                <div class="card-body">
-                    <h5 class="card-title">Available Apartments</h5>
-                    <p class="display-6">{{ available_apartments }}</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 mb-3">
-            <div class="card border-0 shadow-sm text-white bg-danger">
-                <div class="card-body">
-                    <h5 class="card-title">Pending Payments</h5>
-                    <p class="display-6">{{ pending_rent_payments }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recent Tenants -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h3 class="section-title">👥 Recent Tenants</h3>
-            <ul class="list-group">
-                {% for tenant in recent_tenants %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ tenant.user.username }} — 
-                        {% if tenant.apartment %}
-                            {{ tenant.apartment.name }}
-                        {% else %}
-                            No Apartment Assigned
-                        {% endif %}
-                        <span class="badge bg-primary">Moved in: {{ tenant.move_in_date }}</span>
-                    </li>
-                {% empty %}
-                    <li class="list-group-item">No recent tenants found.</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <!-- Recent Payments -->
-    <div class="card mb-4">
-        <div class="card-body">
-            <h3 class="section-title">💳 Recent Payments</h3>
-            <ul class="list-group">
-                {% for payment in recent_payments %}
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                        {{ payment.tenant.user.username }} — {{ payment.amount }} KES
-                        <span class="badge bg-success">Paid: {{ payment.payment_date }}</span>
-                    </li>
-                {% empty %}
-                    <li class="list-group-item">No recent payments found.</li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-
-    <!-- Footer or Extra Actions -->
-    <div class="text-center">
-        <a href="{% url 'rent:tenant_list' %}" class="btn btn-outline-primary">View All Tenants</a>
-        <a href="{% url 'rent:apartment_list' %}" class="btn btn-outline-secondary">View Apartments</a>
-    </div>
-
-</div>
-{% endblock %}
+    <h2>Recent Utility Usage</h2>
+    <ul>
+        {% for usage in recent_utility_usage %}
+            <li>{{ usage.tenant.user.username }} used {{ usage.units }} units on {{ usage.date_recorded }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
 
